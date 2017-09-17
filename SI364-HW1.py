@@ -1,3 +1,5 @@
+
+import requests
 ## HW 1
 ## SI 364 F17
 ## Due: September 19, 2017
@@ -22,6 +24,18 @@ app.debug = True
 def hello_to_you():
     return 'Hello!'
 
+@app.route('/class')
+def hello_class():
+	return '<h1>Welcome to SI 364</h1>'
+
+@app.route('/movie/<movie_name>')
+def search_for_movie(movie_name):
+	base_url = "https://itunes.apple.com/search?parameterkeyvalue"
+	params = {'term': movie_name, 'entity':'movie'}
+	response = requests.get(base_url,params).json()
+	print(response)
+	return '<h1>{}</h1>'.format(response)
+
 
 if __name__ == '__main__':
     app.run()
@@ -34,6 +48,7 @@ if __name__ == '__main__':
 #  "resultCount":0,
 #  "results": []
 # }
+
 
 
 ## You should use the iTunes Search API to get that data.
